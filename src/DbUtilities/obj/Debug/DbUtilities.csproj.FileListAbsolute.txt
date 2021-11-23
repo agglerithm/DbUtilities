@@ -1,5 +1,0 @@
-C:\Projects\DbUtilities\src\DbUtilities\bin\Debug\DbUtilities.dll
-C:\Projects\DbUtilities\src\DbUtilities\bin\Debug\DbUtilities.pdb
-C:\Projects\DbUtilities\src\DbUtilities\obj\Debug\DbUtilities.dll
-C:\Projects\DbUtilities\src\DbUtilities\obj\Debug\DbUtilities.pdb
-C:\Projects\DbUtilities\src\DbUtilities\obj\Debug\DbUtilities.csprojResolveAssemblyReference.cache
