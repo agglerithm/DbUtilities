@@ -63,6 +63,11 @@ namespace DbUtilities.Utilities
             return type != null && type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
         }
 
+        public static bool TypeIsEquivalent(this Type type1, Type type2)
+        {
+            return type1.GetNonNullableType() == type2.GetNonNullableType();
+        }
+
         public static bool IsNullAssignable(this Type type)
         {
             return !type.IsValueType || IsNullableType(type);

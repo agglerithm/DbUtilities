@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace DbUtilities.Utilities
 {
@@ -17,7 +15,7 @@ namespace DbUtilities.Utilities
             {
                 obj.ApplyRecursiveAssignments(flatObject, prop);
             }
-
+            
             return obj;
         }
 
@@ -25,28 +23,60 @@ namespace DbUtilities.Utilities
         {
             var objType = obj.GetType();
             var props = objType.GetProperties();
-            props.AssignClassChildren(obj, flattenedObject);
+            Console.WriteLine(props.AssignClassChildren(obj, flattenedObject));
 
         }
 
-        public static void AssignClassChildren(this PropertyInfo[] props, object obj, object flattenedObject)
+        public static string AssignClassChildren(this PropertyInfo[] props, object obj, object flattenedObject)
         {
-            var flattenedProps = flattenedObject.GetType().GetProperties();
-            foreach (var classProp in props)
+            var assignmentFailures = new StringBuilder();
+            var flattenedProps = flattenedObject.GetType().GetProperties(); 
+            foreach (var toProp in props)
             {
-                var matchingProp = flattenedProps.First(p => p.Name == classProp.Name);
-                if (classProp.GetType().IsClass)
+                var matchingProp = flattenedProps.FirstOrDefault(p => p.Name == toProp.Name);
+                if (matchingProp == null)
+                    continue;
+                if (toProp.PropertyType.IsClass && !toProp.PropertyType.IsAssignableFrom(typeof(string)))
                 {
-                    var child = classProp.PropertyType.CreateInstance();
-                    classProp.SetValue(obj, child);
-                    child.GetType().GetProperties().AssignClassChildren(child, flattenedObject);
+                    var child = toProp.PropertyType.CreateInstance();
+                    toProp.SetValue(obj, child);
+                    assignmentFailures.AppendLine(child.GetType().GetProperties().AssignClassChildren(child, flattenedObject));
                 }
                 else
                 {
-                    classProp.SetValue(obj,matchingProp.GetValue(flattenedObject));
+                    try
+                    {
+                        toProp.SetValue(obj, matchingProp.GetTypedValue(toProp, flattenedObject, obj));
+
+                    }
+                    catch (Exception ex)
+                    {
+                        assignmentFailures.AppendLine($"{toProp.Name}:{toProp.PropertyType.Name},{ex}");
+                    }
                 }
             }
-            
+
+            return assignmentFailures.ToString();
+
+        }
+
+        public static object GetTypedValue(this PropertyInfo fromProp, PropertyInfo toProp, object fromObj, object toObj)
+        {
+            var fromValue = fromProp.GetValue(fromObj);
+            return fromValue.Convert(toProp.PropertyType);
+        }
+
+        public static object Convert(this object fromValue, Type toType)
+        {
+            if (fromValue == null)
+                return toType.GetDefault();
+            return fromValue.GetType().TypeIsEquivalent(toType) ? fromValue : 
+                fromValue.InternalConvert(toType);
+        }
+
+        private static object InternalConvert(this object fromValue, Type toType)
+        {
+            return toType.IsAssignableFrom(typeof(string)) ? fromValue.ToString() : System.Convert.ChangeType(fromValue, toType);
         }
 
         public static object CreateInstance(this Type t)
