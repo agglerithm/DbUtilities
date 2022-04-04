@@ -81,7 +81,6 @@ namespace DbUtilities.StoredProcedures
 
         public string BuildResultTypeText(object parms)
         {
-            var fieldNames = new List<string>();
             var sb = new StringBuilder();
             sb.AppendLine("public class ReturnTypeName {");
             

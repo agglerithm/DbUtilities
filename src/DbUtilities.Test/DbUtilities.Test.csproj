@@ -55,12 +55,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Device.cs" />
-    <Compile Include="spPanel_GetDeviceConfiguration.cs" />
-    <Compile Include="StoredProcTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResultTypeGenerator.cs" />
     <Compile Include="BaseTest.cs" />
-    <Compile Include="MappingTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

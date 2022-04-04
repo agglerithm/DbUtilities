@@ -5,10 +5,14 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DbUtilities")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("NuGet.DbUtilities.Package")]
+[assembly: AssemblyDescription("Project template made by EyeCatch (http://www.eyecatch.no/)")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("NuGet.DbUtilities.Package")]
+[assembly: AssemblyCopyright("Copyright ©  2022")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -16,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("db58978f-db96-45aa-b7bc-a627e1f1e43b")]
+[assembly: Guid("5b586874-8d3e-4137-9ba8-e982413416d5")]
 
 // Version information for an assembly consists of the following four values:
 //
